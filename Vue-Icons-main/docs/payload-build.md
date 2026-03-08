@@ -2,6 +2,8 @@
 
 This repo currently does `not` build PS4 icon payloads from source.
 
+Upstream attribution for the base project and payload usage is documented in [`CREDITS.md`](d:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\CREDITS.md).
+
 What it does today:
 - Reads prebuilt `.elf` payload templates from [`PayloadKit`](d:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\PayloadKit).
 - Patches the default title ID marker (`CUSA00960`) to the target app title ID.
