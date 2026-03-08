@@ -21,6 +21,7 @@ namespace Vue_Icons
 
         private Label headerTitle = null!;
         private Label headerSubtitle = null!;
+        private Panel workspacePanel = null!;
         private Panel sidebarPanel = null!;
         private GroupBox groupConnection = null!;
         private GroupBox groupCustom = null!;
@@ -37,6 +38,15 @@ namespace Vue_Icons
         private ListView listViewApps = null!;
         private RichTextBox richTextBoxStatus = null!;
         private ContextMenuStrip appListMenu = null!;
+        private ListView payloadGallery = null!;
+        private ImageList payloadGalleryImages = null!;
+        private Label labelPayloadCount = null!;
+        private Label labelPayloadLibraryValue = null!;
+        private Label labelGeneratedValue = null!;
+        private Label labelAppLibraryValue = null!;
+        private Label labelWorkspaceTarget = null!;
+        private Label labelWorkspacePayload = null!;
+        private bool isSyncingPayloadSelection;
 
         private sealed class Ps4AppEntry
         {
@@ -82,6 +92,7 @@ namespace Vue_Icons
             try
             {
                 UpdatePayloadPreview(comboBox1.Text);
+                SyncGallerySelection(comboBox1.Text);
                 AppendStatus($"Selected payload: {comboBox1.Text}");
             }
             catch (Exception ex)
@@ -119,7 +130,7 @@ namespace Vue_Icons
             headerSubtitle = new Label
             {
                 AutoSize = true,
-                Text = "Preset and custom icon payload launcher with PS4 app library support.",
+                Text = "Payload browser, icon toolkit, app library tools, and quick console workflow in one place.",
                 Font = new Font("Segoe UI", 10F, FontStyle.Regular),
                 ForeColor = Color.FromArgb(158, 176, 204),
                 Location = new Point(28, 60)
@@ -130,11 +141,191 @@ namespace Vue_Icons
 
             BuildSidebar();
             RestyleConnectionControls();
-            RestylePresetGrid();
+            BuildWorkspace();
+            HideLegacyPresetGrid();
             RestylePayloadBrowser();
+            UpdateWorkspaceSummary();
 
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void BuildWorkspace()
+        {
+            workspacePanel = new Panel
+            {
+                Location = new Point(24, 100),
+                Size = new Size(772, 296),
+                BackColor = Color.FromArgb(9, 22, 42)
+            };
+            Controls.Add(workspacePanel);
+
+            Label title = new()
+            {
+                Text = "Workspace",
+                Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold),
+                ForeColor = Color.White,
+                AutoSize = true,
+                Location = new Point(20, 18)
+            };
+
+            Label subtitle = new()
+            {
+                Text = "A cleaner multi-tool surface for payload browsing, file management, and PS4 app operations.",
+                Font = new Font("Segoe UI", 9.5F, FontStyle.Regular),
+                ForeColor = Color.FromArgb(158, 176, 204),
+                AutoSize = true,
+                MaximumSize = new Size(520, 0),
+                Location = new Point(22, 48)
+            };
+
+            workspacePanel.Controls.Add(title);
+            workspacePanel.Controls.Add(subtitle);
+
+            workspacePanel.Controls.Add(CreateMetricCard("Payload Library", "0", new Point(20, 92), out labelPayloadLibraryValue));
+            workspacePanel.Controls.Add(CreateMetricCard("Generated Files", "0", new Point(202, 92), out labelGeneratedValue));
+            workspacePanel.Controls.Add(CreateMetricCard("App Library", "0", new Point(384, 92), out labelAppLibraryValue));
+
+            Panel targetPanel = new()
+            {
+                Location = new Point(566, 18),
+                Size = new Size(186, 244),
+                BackColor = Color.FromArgb(15, 31, 57)
+            };
+
+            Label targetTitle = new()
+            {
+                Text = "Current Target",
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(14, 14)
+            };
+
+            labelWorkspaceTarget = new Label
+            {
+                Text = DefaultTitleId,
+                ForeColor = Color.FromArgb(101, 194, 255),
+                Font = new Font("Consolas", 15F, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(14, 48)
+            };
+
+            Label payloadLabel = new()
+            {
+                Text = "Selected Payload",
+                ForeColor = Color.FromArgb(158, 176, 204),
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                AutoSize = true,
+                Location = new Point(14, 88)
+            };
+
+            labelWorkspacePayload = new Label
+            {
+                Text = "None selected",
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Bold),
+                AutoSize = true,
+                MaximumSize = new Size(158, 0),
+                Location = new Point(14, 110)
+            };
+
+            Label targetHint = new()
+            {
+                Text = "Use the app library on the right to target any installed app, then send a payload or custom icon from the browser below.",
+                ForeColor = Color.FromArgb(158, 176, 204),
+                AutoSize = true,
+                MaximumSize = new Size(156, 0),
+                Location = new Point(14, 150)
+            };
+
+            targetPanel.Controls.Add(targetTitle);
+            targetPanel.Controls.Add(labelWorkspaceTarget);
+            targetPanel.Controls.Add(payloadLabel);
+            targetPanel.Controls.Add(labelWorkspacePayload);
+            targetPanel.Controls.Add(targetHint);
+            workspacePanel.Controls.Add(targetPanel);
+
+            FlowLayoutPanel actionPanel = new()
+            {
+                Location = new Point(20, 182),
+                Size = new Size(528, 80),
+                BackColor = Color.Transparent,
+                WrapContents = true,
+                FlowDirection = FlowDirection.LeftToRight
+            };
+
+            actionPanel.Controls.Add(CreateActionButton("Refresh Library", (_, _) => LoadAvailablePayloads(), true));
+            actionPanel.Controls.Add(CreateActionButton("Open PayloadKit", (_, _) => OpenFolder(PayloadDirectory), false));
+            actionPanel.Controls.Add(CreateActionButton("Open Generated", (_, _) => OpenFolder(GeneratedPayloadDirectory), false));
+            actionPanel.Controls.Add(CreateActionButton("Browse Custom PNG", buttonBrowseCustomIcon_Click, false));
+            actionPanel.Controls.Add(CreateActionButton("Load PS4 Apps", async (_, _) => await LoadAppsFromPs4Async(), true));
+            actionPanel.Controls.Add(CreateActionButton("Import app.db", buttonImportAppDb_Click, false));
+
+            workspacePanel.Controls.Add(actionPanel);
+        }
+
+        private Panel CreateMetricCard(string title, string value, Point location, out Label valueLabel)
+        {
+            Panel card = new()
+            {
+                Location = location,
+                Size = new Size(164, 76),
+                BackColor = Color.FromArgb(15, 31, 57)
+            };
+
+            Label titleLabel = new()
+            {
+                Text = title,
+                ForeColor = Color.FromArgb(158, 176, 204),
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                AutoSize = true,
+                Location = new Point(14, 12)
+            };
+
+            valueLabel = new Label
+            {
+                Text = value,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI Semibold", 22F, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(12, 28)
+            };
+
+            card.Controls.Add(titleLabel);
+            card.Controls.Add(valueLabel);
+            return card;
+        }
+
+        private Button CreateActionButton(string text, EventHandler onClick, bool primary)
+        {
+            Button button = new()
+            {
+                Text = text,
+                Size = new Size(164, 32),
+                Margin = new Padding(0, 0, 12, 10)
+            };
+
+            button.Click += onClick;
+            StyleButton(button, primary);
+            return button;
+        }
+
+        private void HideLegacyPresetGrid()
+        {
+            Control[] legacyControls =
+            {
+                pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6,
+                pictureBox7, pictureBox8, pictureBox9, pictureBox10, pictureBox11,
+                button2, button3, button4, button5, button6,
+                button7, button8, button9, button10, button11
+            };
+
+            foreach (Control control in legacyControls)
+            {
+                control.Visible = false;
+                control.Enabled = false;
+            }
         }
 
         private void BuildSidebar()
@@ -374,6 +565,7 @@ namespace Vue_Icons
             StyleTextBox(textBoxTitleId);
             StyleTextBox(textBoxFtpPort);
             StyleButton(button1, true);
+            textBoxTitleId.TextChanged += (_, _) => UpdateWorkspaceSummary();
 
             label1.ForeColor = Color.FromArgb(201, 214, 234);
             label2.ForeColor = Color.FromArgb(201, 214, 234);
@@ -441,6 +633,15 @@ namespace Vue_Icons
             comboBox1.BackColor = Color.FromArgb(21, 43, 74);
             comboBox1.ForeColor = Color.White;
 
+            labelPayloadCount = new Label
+            {
+                Location = new Point(258, 39),
+                AutoSize = true,
+                ForeColor = Color.FromArgb(158, 176, 204),
+                BackColor = Color.Transparent,
+                Text = "0 payloads"
+            };
+
             pictureBox12.Location = new Point(22, 78);
             pictureBox12.Size = new Size(150, 150);
             pictureBox12.Enabled = true;
@@ -473,8 +674,31 @@ namespace Vue_Icons
                 BackColor = Color.Transparent
             };
 
+            payloadGalleryImages = new ImageList
+            {
+                ColorDepth = ColorDepth.Depth32Bit,
+                ImageSize = new Size(72, 72)
+            };
+
+            payloadGallery = new ListView
+            {
+                Location = new Point(192, 170),
+                Size = new Size(548, 146),
+                View = View.LargeIcon,
+                MultiSelect = false,
+                HideSelection = false,
+                BackColor = Color.FromArgb(16, 31, 57),
+                ForeColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                LargeImageList = payloadGalleryImages
+            };
+            payloadGallery.SelectedIndexChanged += payloadGallery_SelectedIndexChanged;
+            payloadGallery.DoubleClick += payloadGallery_DoubleClick;
+
             groupBox1.Controls.Add(labelPayloadHint);
             groupBox1.Controls.Add(labelPresetHelp);
+            groupBox1.Controls.Add(labelPayloadCount);
+            groupBox1.Controls.Add(payloadGallery);
         }
 
         private void StyleSidebarButtons()
@@ -483,6 +707,16 @@ namespace Vue_Icons
             StyleButton(buttonImportAppDb, false);
             StyleButton(buttonBrowseCustomIcon, false);
             StyleButton(buttonSendCustomIcon, true);
+        }
+
+        private void OpenFolder(string path)
+        {
+            Directory.CreateDirectory(path);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = path,
+                UseShellExecute = true
+            });
         }
 
         private void StyleTextBox(TextBox textBox)
@@ -553,6 +787,8 @@ namespace Vue_Icons
         private void LoadAvailablePayloads()
         {
             comboBox1.Items.Clear();
+            payloadGallery?.Items.Clear();
+            payloadGalleryImages?.Images.Clear();
 
             if (!Directory.Exists(PayloadDirectory))
             {
@@ -560,15 +796,22 @@ namespace Vue_Icons
                 return;
             }
 
-            object[] payloadNames = Directory
+            string[] payloadNames = Directory
                 .GetFiles(PayloadDirectory, "*.elf")
                 .Select(Path.GetFileNameWithoutExtension)
+                .OfType<string>()
                 .Where(name => !string.IsNullOrWhiteSpace(name))
-                .OrderBy(name => name, StringComparer.OrdinalIgnoreCase)
-                .Cast<object>()
+                .OrderBy(GetPayloadSortKey, StringComparer.OrdinalIgnoreCase)
                 .ToArray();
 
-            comboBox1.Items.AddRange(payloadNames);
+            comboBox1.Items.AddRange(payloadNames.Cast<object>().ToArray());
+            PopulatePayloadGallery(payloadNames);
+            if (labelPayloadCount is not null)
+            {
+                int presetCount = payloadNames.Count(name => name.StartsWith("preset_", StringComparison.OrdinalIgnoreCase));
+                labelPayloadCount.Text = $"{payloadNames.Length} payloads, {presetCount} quick presets";
+            }
+            UpdateWorkspaceSummary();
 
             if (comboBox1.Items.Count > 0)
             {
@@ -591,6 +834,126 @@ namespace Vue_Icons
 
             pictureBox12.Image?.Dispose();
             pictureBox12.Image = LoadImageCopy(pngPath);
+            UpdateWorkspaceSummary();
+        }
+
+        private void PopulatePayloadGallery(IEnumerable<string> payloadNames)
+        {
+            if (payloadGallery is null || payloadGalleryImages is null)
+            {
+                return;
+            }
+
+            foreach (string payloadName in payloadNames)
+            {
+                string pngPath = Path.Combine(ImageDirectory, payloadName + ".png");
+                Image preview = File.Exists(pngPath)
+                    ? CreateGalleryThumbnail(pngPath)
+                    : new Bitmap(72, 72);
+
+                payloadGalleryImages.Images.Add(payloadName, preview);
+
+                ListViewItem item = new(GetPayloadDisplayName(payloadName))
+                {
+                    Name = payloadName,
+                    Tag = payloadName,
+                    ImageKey = payloadName
+                };
+
+                payloadGallery.Items.Add(item);
+            }
+        }
+
+        private static string GetPayloadSortKey(string payloadName)
+        {
+            bool isPreset = payloadName.StartsWith("preset_", StringComparison.OrdinalIgnoreCase);
+            return (isPreset ? "0_" : "1_") + payloadName;
+        }
+
+        private static string GetPayloadDisplayName(string payloadName)
+        {
+            if (payloadName.StartsWith("preset_icon_", StringComparison.OrdinalIgnoreCase))
+            {
+                string suffix = payloadName["preset_icon_".Length..];
+                return $"Preset {suffix}";
+            }
+
+            return payloadName.Replace('_', ' ');
+        }
+
+        private static Image CreateGalleryThumbnail(string path)
+        {
+            using Image source = LoadImageCopy(path);
+            Bitmap thumbnail = new(72, 72);
+            using Graphics graphics = Graphics.FromImage(thumbnail);
+            graphics.Clear(Color.FromArgb(16, 31, 57));
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            Rectangle destination = FitImage(source.Size, thumbnail.Size);
+            graphics.DrawImage(source, destination);
+            return thumbnail;
+        }
+
+        private void payloadGallery_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (isSyncingPayloadSelection || payloadGallery.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            string payloadName = payloadGallery.SelectedItems[0].Tag?.ToString() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(payloadName))
+            {
+                return;
+            }
+
+            isSyncingPayloadSelection = true;
+            comboBox1.SelectedItem = payloadName;
+            isSyncingPayloadSelection = false;
+        }
+
+        private void payloadGallery_DoubleClick(object? sender, EventArgs e)
+        {
+            if (payloadGallery.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            string payloadName = payloadGallery.SelectedItems[0].Tag?.ToString() ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(payloadName))
+            {
+                SendPresetPayload(payloadName, $"payload {payloadName}");
+            }
+        }
+
+        private void SyncGallerySelection(string payloadName)
+        {
+            if (payloadGallery is null || isSyncingPayloadSelection || string.IsNullOrWhiteSpace(payloadName))
+            {
+                return;
+            }
+
+            if (!payloadGallery.Items.ContainsKey(payloadName))
+            {
+                return;
+            }
+
+            isSyncingPayloadSelection = true;
+            foreach (ListViewItem existingItem in payloadGallery.Items)
+            {
+                existingItem.Selected = false;
+            }
+            ListViewItem? item = payloadGallery.Items[payloadName];
+            if (item is null)
+            {
+                isSyncingPayloadSelection = false;
+                return;
+            }
+            item.Selected = true;
+            item.Focused = true;
+            item.EnsureVisible();
+            isSyncingPayloadSelection = false;
         }
 
         private void SendPresetPayload(string payloadName, string friendlyName)
@@ -651,6 +1014,7 @@ namespace Vue_Icons
             });
 
             AppendStatus($"Sent {friendlyName} to {titleId}.");
+            UpdateWorkspaceSummary();
         }
 
         private string? NormalizeTitleId(string? titleId)
@@ -880,7 +1244,7 @@ namespace Vue_Icons
                 $"The image is still too large after automatic shrinking. Limit: {maxBytes.GetValueOrDefault() / 1024} KB, smallest attempt: {bestAttempt?.Length / 1024 ?? 0} KB.");
         }
 
-        private Rectangle FitImage(Size source, Size destination)
+        private static Rectangle FitImage(Size source, Size destination)
         {
             float ratio = Math.Min(destination.Width / (float)source.Width, destination.Height / (float)source.Height);
             int width = Math.Max(1, (int)(source.Width * ratio));
@@ -923,6 +1287,7 @@ namespace Vue_Icons
                 allApps.Clear();
                 allApps.AddRange(apps.OrderBy(app => app.Name, StringComparer.OrdinalIgnoreCase));
                 RefreshAppListView();
+                UpdateWorkspaceSummary();
 
                 AppendStatus($"Loaded {allApps.Count} apps from PS4 app.db.");
                 MessageBox.Show($"Loaded {allApps.Count} app entries from the PS4.", AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1095,6 +1460,7 @@ namespace Vue_Icons
                 allApps.Clear();
                 allApps.AddRange(ReadAppsFromDatabase(dialog.FileName).OrderBy(app => app.Name, StringComparer.OrdinalIgnoreCase));
                 RefreshAppListView();
+                UpdateWorkspaceSummary();
                 AppendStatus($"Imported {allApps.Count} apps from {Path.GetFileName(dialog.FileName)}.");
             }
             catch (Exception ex)
@@ -1148,6 +1514,7 @@ namespace Vue_Icons
             }
 
             textBoxTitleId.Text = app.TitleId;
+            UpdateWorkspaceSummary();
             AppendStatus($"Selected app {app.Name} ({app.TitleId}).");
         }
 
@@ -1277,6 +1644,7 @@ namespace Vue_Icons
             }
 
             textBoxTitleId.Text = app.TitleId;
+            UpdateWorkspaceSummary();
             AppendStatus($"Using {app.Name} as the target app.");
         }
 
@@ -1352,6 +1720,43 @@ namespace Vue_Icons
             }
 
             return Path.Combine(Application.StartupPath, "vue");
+        }
+
+        private void UpdateWorkspaceSummary()
+        {
+            if (labelPayloadLibraryValue is not null)
+            {
+                int payloadCount = Directory.Exists(PayloadDirectory)
+                    ? Directory.GetFiles(PayloadDirectory, "*.elf").Length
+                    : 0;
+                labelPayloadLibraryValue.Text = payloadCount.ToString();
+            }
+
+            if (labelGeneratedValue is not null)
+            {
+                int generatedCount = Directory.Exists(GeneratedPayloadDirectory)
+                    ? Directory.GetFiles(GeneratedPayloadDirectory, "*.elf").Length
+                    : 0;
+                labelGeneratedValue.Text = generatedCount.ToString();
+            }
+
+            if (labelAppLibraryValue is not null)
+            {
+                labelAppLibraryValue.Text = allApps.Count.ToString();
+            }
+
+            if (labelWorkspaceTarget is not null)
+            {
+                string targetTitle = NormalizeTitleId(textBoxTitleId?.Text) ?? DefaultTitleId;
+                labelWorkspaceTarget.Text = targetTitle;
+            }
+
+            if (labelWorkspacePayload is not null)
+            {
+                labelWorkspacePayload.Text = string.IsNullOrWhiteSpace(comboBox1?.Text)
+                    ? "None selected"
+                    : GetPayloadDisplayName(comboBox1.Text);
+            }
         }
 
         private void AppendStatus(string message)

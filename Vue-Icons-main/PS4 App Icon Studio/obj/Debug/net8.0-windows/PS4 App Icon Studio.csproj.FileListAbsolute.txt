@@ -169,3 +169,4 @@ D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\PS4 App Icon Studio\bin\Debug\net8.0-w
 D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\PS4 App Icon Studio\bin\Debug\net8.0-windows\PayloadKit\payloads\preset_icon_08.elf
 D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\PS4 App Icon Studio\bin\Debug\net8.0-windows\PayloadKit\payloads\preset_icon_09.elf
 D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\PS4 App Icon Studio\bin\Debug\net8.0-windows\PayloadKit\payloads\preset_icon_10.elf
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\PS4 App Icon Studio\obj\Debug\net8.0-windows\PS4 App Icon Studio.sourcelink.json

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PS4 App Icon Studio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+63f5d4eb86749a3fa811a3a912043c5c417668c1")]
 [assembly: System.Reflection.AssemblyProductAttribute("PS4 App Icon Studio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PS4 App Icon Studio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
