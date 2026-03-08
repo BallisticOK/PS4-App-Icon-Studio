@@ -1,0 +1,60 @@
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.exe
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.deps.json
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.runtimeconfig.json
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.dll
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.pdb
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue_Icons.Form1.resources
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue_Icons.Properties.Resources.resources
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.csproj.GenerateResource.cache
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.AssemblyInfoInputs.cache
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.AssemblyInfo.cs
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.csproj.CoreCompileInputs.cache
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.dll
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\refint\Vue Icons.dll
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.pdb
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.genruntimeconfig.cache
+C:\Users\Master\source\repos\Vue Icons\Vue Icons\obj\Debug\net8.0-windows\ref\Vue Icons.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.exe
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.deps.json
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.runtimeconfig.json
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\Vue Icons.pdb
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue_Icons.Form1.resources
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue_Icons.Properties.Resources.resources
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.csproj.GenerateResource.cache
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.GeneratedMSBuildEditorConfig.editorconfig
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.AssemblyInfoInputs.cache
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.AssemblyInfo.cs
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.csproj.CoreCompileInputs.cache
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\refint\Vue Icons.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.pdb
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.genruntimeconfig.cache
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\ref\Vue Icons.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.csproj.AssemblyReference.cache
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite3.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
+D:\PS4 PKGs\Vue-Icons-main\Vue-Icons-main\Vue Icons\obj\Debug\net8.0-windows\Vue Icons.csproj.Up2Date
